@@ -33,7 +33,8 @@ var fightOrSkip = function () {
         }
     }
     return false;
-}
+};
+
 // fight function (now with parameter for enemy's object holding name, health, and attack values)
 var fight = function (enemy) {
     // keep track of who goes first
@@ -104,6 +105,10 @@ var startGame = function () {
     playerInfo.reset();
 
     for (var i = 0; i < enemyInfo.length; i++) {
+        // check player stats
+        console.log(playerInfo);
+
+        // if player is alive keep fighting
         if (playerInfo.health > 0) {
             // let player know what round they are in, remember that arrays start at 0 so it needs to have 1 added to it
             window.alert("Welcome to Robot Gladiators! Round " + (i + 1));
@@ -126,10 +131,11 @@ var startGame = function () {
                     shop();
                 }
             }
-            else {
-                window.alert("You have lost your robot in battle! Game Over!");
-                break;
-            }
+        }
+        // if player is not alive, beack out of the loop and let endGame function run
+        else {
+            window.alert("You have lost your robot in battle! Game Over!");
+            break;
         }
     }
     // after loop ends, we are either out of player.health or enemies to fight, so run the endGame function
@@ -162,16 +168,17 @@ var endGame = function () {
     if (playAgainConfirm) {
         // restart the game
         startGame();
-    }
-    else {
+    } else {
         window.alert("Thank you for playing Robot Gladiators! Come back soon!");
     }
 };
 // function to call the shop
 var shop = function () {
     var shopOptionPrompt = window.prompt("Would you like to REFILL your health, UPGRADE your attack, or LEAVE the store? Please enter one 1 for REFILL, 2 for UPGRADE, or 3 for LEAVE.");
-    // use switch to carry out action
+    // convert answer from prompt to an actual number
     shopOptionPrompt = parseInt(shopOptionPrompt);
+
+    // use switch to carry out action
     switch (shopOptionPrompt) {
         case 1:
             playerInfo.refillHealth();
@@ -190,10 +197,9 @@ var shop = function () {
             // call shop() again to force player to pick a valid option
             shop();
             break;
-
     }
-
 };
+
 // function to set name
 var getPlayerName = function () {
     var name = "";
@@ -256,11 +262,6 @@ var enemyInfo = [
         attack: randomNumber(10, 14)
     }
 ];
-
-console.log(enemyInfo);
-console.log(enemyInfo[0]);
-console.log(enemyInfo[0].name);
-console.log(enemyInfo[0]['attack']);
 
 /* END GAME INFORMATION / VARIABLES */
 
